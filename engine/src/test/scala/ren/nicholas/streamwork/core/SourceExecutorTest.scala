@@ -15,22 +15,25 @@ class SourceExecutorTest extends AnyFunSpec with BeforeAndAfter {
       sourceExecutor = new SourceExecutor(source)
     }
 
-    it("should return false if no more events source available") {
-      assert(!sourceExecutor.runOnce())
+    describe("runOne") {
+      it("should return false if no more events source available") {
+        assert(!sourceExecutor.runOnce())
+      }
+
+      it("should return true if no more events source available") {
+        val events = List("one", "two")
+        source.add(events)
+        assert(sourceExecutor.runOnce())
+      }
+
+      it("should push event to outgoing queue") {
+        val events = List("one", "two")
+        source.add(events)
+        sourceExecutor.runOnce()
+        assert(sourceExecutor.outgoingQueue.toList == events)
+      }
     }
 
-    it("should return true if no more events source available") {
-      val events = List("one", "two")
-      source.add(events)
-      assert(sourceExecutor.runOnce())
-    }
-
-    it("should push event to outgoing queue") {
-      val events = List("one", "two")
-      source.add(events)
-      sourceExecutor.runOnce()
-      assert(sourceExecutor.outgoingQueue.toList == events)
-    }
   }
 }
 
