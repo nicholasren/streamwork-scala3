@@ -2,7 +2,7 @@ package ren.nicholas.streamwork.core
 
 import scala.collection.mutable
 
-class SourceExecutor[T](source: ren.nicholas.streamwork.core.Source[T]) extends Stream[T] {
+class SourceExecutor[T](source: ren.nicholas.streamwork.core.Source[T]) {
   val outgoing: mutable.Queue[T] = mutable.Queue.empty[T]
 
   /**

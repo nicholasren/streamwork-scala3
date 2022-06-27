@@ -1,16 +1,14 @@
 package ren.nicholas.streamwork.example
 
 import org.scalatest.funspec.AnyFunSpec
-import org.scalatest.matchers.should.Matchers.*
-import org.scalatest._
-
+import org.scalatest.matchers.should
 
 import ren.nicholas.streamwork.core.Source
 import ren.nicholas.streamwork.core.Sink
 import ren.nicholas.streamwork.core.Topology
 
 
-class SourceAndOperatorTest extends AnyFunSpec {
+class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
 
   describe("simple stream run") {
     it("should read from source and apply operator") {

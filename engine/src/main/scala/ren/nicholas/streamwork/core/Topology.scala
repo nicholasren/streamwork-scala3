@@ -5,7 +5,8 @@ class Topology[T, R] {
 }
 
 object Topology {
-  def source[T](name: String, s: Source[T]): Stream[T] = new SourceExecutor(s)
+  //TODO: stream builder
+  def source[T](name: String, source: Source[T]): Stream[T] = ???
 
   def run[T](stream: Stream[T]) = ???
 }

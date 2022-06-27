@@ -1,12 +1,12 @@
 package ren.nicholas.streamwork.core
 
 import org.scalatest.funspec.AnyFunSpec
-import org.scalatest.matchers.should.Matchers.*
+import org.scalatest.matchers.should
 import org.scalatest._
 
 import scala.collection.mutable
 
-class SinkExecutorTest extends AnyFunSpec {
+class SinkExecutorTest extends AnyFunSpec with should.Matchers {
 
   val incoming: mutable.Queue[String] = mutable.Queue.empty
   val sink: InMemorySink[String] = InMemorySink[String]()
