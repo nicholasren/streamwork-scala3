@@ -1,12 +1,17 @@
 package ren.nicholas.streamwork.core
 
-class Topology[T, R] {
+import scala.collection.mutable.ListBuffer
+import ren.nicholas.streamwork.core.KStream
+
+class Topology {
 
 }
 
-object Topology {
-  //TODO: stream builder
-  def source[T](name: String, source: Source[T]): Stream[T] = ???
+class StreamBuilder {
+  def source[T](name: String, source: Source[T]): KStream[T] = {
+    val stream: KStream[T] = KStream[T]()
+    stream
+  }
 
-  def run[T](stream: Stream[T]) = ???
+  def build(): Topology = ???
 }

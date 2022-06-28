@@ -2,8 +2,9 @@ package ren.nicholas.streamwork.core
 
 import scala.collection.mutable
 
-class SourceExecutor[T](source: ren.nicholas.streamwork.core.Source[T]) {
-  val outgoing: mutable.Queue[T] = mutable.Queue.empty[T]
+class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] {
+  val outgoing: Option[mutable.Queue[R]] = Some(mutable.Queue.empty[R])
+  val incoming: Option[mutable.Queue[Unit]] = None
 
   /**
    * Run process once.
@@ -11,6 +12,6 @@ class SourceExecutor[T](source: ren.nicholas.streamwork.core.Source[T]) {
    * @return true if the thread should continue; false if the thread should exist.
    */
   def runOnce(): Unit = {
-    outgoing.enqueue(source.get)
+    outgoing.get.enqueue(source.get)
   }
 }

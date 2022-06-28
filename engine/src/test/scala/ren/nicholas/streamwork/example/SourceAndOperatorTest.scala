@@ -2,10 +2,7 @@ package ren.nicholas.streamwork.example
 
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
-
-import ren.nicholas.streamwork.core.Source
-import ren.nicholas.streamwork.core.Sink
-import ren.nicholas.streamwork.core.Topology
+import ren.nicholas.streamwork.core.{Sink, Source, StreamBuilder, Topology}
 
 
 class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
@@ -15,14 +12,17 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
       val source: Source[Int] = Source.of(1, 2, 3, 4)
       val sink: Sink[Int] = Sink.empty()
 
-      val stream = Topology
+      val streamBuilder: StreamBuilder = StreamBuilder()
+
+      streamBuilder
         .source("numbers", source)
-        .map("double", (x: Int) => x * 2)
         .to("result", sink)
 
-      Topology.run(stream)
+      val topology = streamBuilder.build()
 
-      sink.all should contain allOf(2, 4, 6, 8)
+      //TODO: run topology
+
+      sink.all should contain allOf(1, 2, 3, 4)
     }
   }
 
