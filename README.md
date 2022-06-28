@@ -13,7 +13,8 @@ is there an way to build it without mutable state?
 - [x] Source and SourceExecutor
 - [x] Operator and OperatorExecutor
 - [ ] Topology that connect above components
-  - [ ] construct stream 
-    - source and operator should be connected via queues
-  - [ ] start streams
-  - [ ] stop streams
+  - [x] construct stream 
+    - [x]source and sink should be connected via queues
+    - [ ]source and operator should be connected via queues
+  - [x] start streams
+  - [x] stop streams

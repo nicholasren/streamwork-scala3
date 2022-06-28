@@ -10,22 +10,23 @@ import scala.collection.mutable
 class OperatorExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matchers {
   describe("A OperatorExecutor") {
     var operatorExecutor: OperatorExecutor[String, Int] = null
-    var incoming: mutable.Queue[String] = null
-    var outgoing: mutable.Queue[Int] = null
+    var incoming: Option[mutable.Queue[String]] = null
+    var outgoing: Option[mutable.Queue[Int]] = null
 
     before {
-      incoming = mutable.Queue.empty
-      outgoing = mutable.Queue.empty
-      operatorExecutor = new OperatorExecutor[String, Int](incoming, outgoing, _.length)
+      incoming = Some(mutable.Queue.empty)
+      outgoing = Some(mutable.Queue.empty)
+      operatorExecutor = new OperatorExecutor[String, Int](incoming, _.length)
+      operatorExecutor.outgoing = outgoing
     }
 
     describe("runOnce") {
       it("should take element and apply operation") {
-        incoming.enqueue("One")
+        incoming.get.enqueue("One")
 
         operatorExecutor.runOnce()
 
-        assert(outgoing.head == 3)
+        assert(outgoing.get.head == 3)
       }
 
       it("should no operation if incoming is empty") {

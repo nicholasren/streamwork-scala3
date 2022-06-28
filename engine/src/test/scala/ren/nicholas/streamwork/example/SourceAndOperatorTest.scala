@@ -12,7 +12,7 @@ import scala.concurrent.duration.SECONDS
 class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
 
   describe("simple stream run") {
-    it("should read from source and apply operator") {
+    it("should read from source and send to sink") {
       val source: Source[Int] = Source.of(1, 2, 3, 4)
       val sink: Sink[Int] = Sink.empty()
 
@@ -27,6 +27,24 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
       Thread.sleep(1000)
 
       sink.all should contain allOf(1, 2, 3, 4)
+    }
+
+    it("should read from source and apply operator and send to sink") {
+      val source: Source[Int] = Source.of(1, 2, 3, 4)
+      val sink: Sink[Int] = Sink.empty()
+
+      val streamBuilder: StreamBuilder = StreamBuilder()
+
+      streamBuilder
+        .source("numbers", source)
+        .map("double", _ * 2)
+        .to("result", sink)
+
+      val topology = streamBuilder.build()
+      topology.run()
+      Thread.sleep(2000)
+
+      sink.all should contain allOf(2, 4, 6, 8)
     }
   }
 }
