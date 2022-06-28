@@ -15,6 +15,7 @@ is there an way to build it without mutable state?
 - [ ] Topology that connect above components
   - [x] construct stream 
     - [x]source and sink should be connected via queues
-    - [ ]source and operator should be connected via queues
+    - [x]source and operator should be connected via queues
   - [x] start streams
-  - [x] stop streams
+  - [ ] use thread safe queue
+  - [ ] stop streams

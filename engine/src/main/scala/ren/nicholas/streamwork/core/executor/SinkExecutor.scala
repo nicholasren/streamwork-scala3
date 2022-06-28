@@ -2,17 +2,17 @@ package ren.nicholas.streamwork.core.executor
 
 import ren.nicholas.streamwork.core.executor.Executor
 import ren.nicholas.streamwork.core.stream.Sink
-
+import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
 
-class SinkExecutor[T](val incoming: Option[mutable.Queue[T]], sink: Sink[T]) extends Executor[T, Unit] {
-  override def outgoing: Option[mutable.Queue[Unit]] = None
+class SinkExecutor[T](val incoming: Option[ConcurrentLinkedQueue[T]], sink: Sink[T]) extends Executor[T, Unit] {
+  override def outgoing: Option[ConcurrentLinkedQueue[Unit]] = None
 
   def runOnce(): Unit = {
-    val queue: mutable.Queue[T] = incoming.get
+    val queue: ConcurrentLinkedQueue[T] = incoming.get
 
-    if (queue.nonEmpty)
-      val t = queue.dequeue()
+    if (!queue.isEmpty)
+      val t = queue.poll()
       sink.push(t)
   }
 }

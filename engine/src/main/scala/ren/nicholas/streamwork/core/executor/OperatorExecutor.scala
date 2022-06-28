@@ -1,15 +1,16 @@
 package ren.nicholas.streamwork.core.executor
 
+import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
 
-class OperatorExecutor[T, R](val incoming: Option[mutable.Queue[T]],
+class OperatorExecutor[T, R](val incoming: Option[ConcurrentLinkedQueue[T]],
                              val operator: T => R) extends Executor[T, R] {
-  var outgoing: Option[mutable.Queue[R]] = Some(mutable.Queue.empty)
+  var outgoing: Option[ConcurrentLinkedQueue[R]] = Some(ConcurrentLinkedQueue[R]())
 
   def runOnce(): Unit = {
-    if (incoming.nonEmpty) {
-      val result = operator.apply(incoming.get.dequeue())
-      outgoing.get.enqueue(result)
+    if (!incoming.get.isEmpty) {
+      val result = operator.apply(incoming.get.poll())
+      outgoing.get.offer(result)
     }
   }
 }

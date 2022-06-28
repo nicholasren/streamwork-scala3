@@ -5,12 +5,14 @@ import org.scalatest.matchers.should
 import org.scalatest.*
 import ren.nicholas.streamwork.core.executor.SinkExecutor
 import ren.nicholas.streamwork.core.stream.InMemorySink
-
+import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
+import scala.jdk.CollectionConverters._
+
 
 class SinkExecutorTest extends AnyFunSpec with should.Matchers {
 
-  val incoming: mutable.Queue[String] = mutable.Queue.empty
+  val incoming: ConcurrentLinkedQueue[String] = ConcurrentLinkedQueue[String]()
   val sink: InMemorySink[String] = InMemorySink[String]()
   val executor: SinkExecutor[String] = SinkExecutor(Some(incoming), sink)
 
@@ -21,7 +23,7 @@ class SinkExecutorTest extends AnyFunSpec with should.Matchers {
     }
 
     it("poll record from incoming queue and push to sink") {
-      incoming.enqueueAll(List("one", "two", "three"))
+      incoming.addAll(List("one", "two", "three").asJava)
 
       executor.runOnce()
       sink.all shouldBe List("one")

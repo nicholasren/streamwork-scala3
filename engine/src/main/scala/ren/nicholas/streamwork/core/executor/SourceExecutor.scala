@@ -2,12 +2,13 @@ package ren.nicholas.streamwork.core.executor
 
 import ren.nicholas.streamwork.core.executor.Executor
 import ren.nicholas.streamwork.core.stream.Source
-
+import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
 
+
 class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] {
-  val outgoing: Option[mutable.Queue[R]] = Some(mutable.Queue.empty[R])
-  val incoming: Option[mutable.Queue[Unit]] = None
+  val outgoing: Option[ConcurrentLinkedQueue[R]] = Some(ConcurrentLinkedQueue[R]())
+  val incoming: Option[ConcurrentLinkedQueue[Unit]] = None
 
   /**
    * Run process once.
@@ -15,6 +16,6 @@ class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] {
    * @return true if the thread should continue; false if the thread should exist.
    */
   def runOnce(): Unit = {
-    outgoing.get.enqueue(source.get)
+    outgoing.get.offer(source.get)
   }
 }

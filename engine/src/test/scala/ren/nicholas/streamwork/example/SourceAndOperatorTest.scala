@@ -42,7 +42,7 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
 
       val topology = streamBuilder.build()
       topology.run()
-      Thread.sleep(2000)
+      Thread.sleep(1000)
 
       sink.all should contain allOf(2, 4, 6, 8)
     }
