@@ -4,6 +4,9 @@ import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
 import ren.nicholas.streamwork.core.{Sink, Source, StreamBuilder, Topology}
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+import scala.concurrent.duration.SECONDS
 
 class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
 
@@ -19,11 +22,10 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers {
         .to("result", sink)
 
       val topology = streamBuilder.build()
-
-      //TODO: run topology
+      topology.run()
+      Thread.sleep(1000)
 
       sink.all should contain allOf(1, 2, 3, 4)
     }
   }
-
 }
