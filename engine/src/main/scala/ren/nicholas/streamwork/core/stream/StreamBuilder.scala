@@ -11,14 +11,14 @@ class StreamBuilder() {
   var nodes: List[Node] = List()
 
   def source[Out](name: String, source: Source[Out]): KStream[Out] = {
-    val executor = SourceExecutor(source)
-    val stream: KStream[Out] = KStream[Out](this, executor)
-    this.add(name, executor)
-    stream
+    this.add(name, SourceExecutor(source))
   }
 
-  def add[Out](name: String, executor: Executor[? <: Any, Out]): Unit = {
+  private[stream]
+  def add[Out](name: String, executor: Executor[? <: Any, Out]): KStream[Out] = {
+    val stream: KStream[Out] = KStream[Out](this, executor)
     nodes = Node(name, executor) :: nodes
+    stream
   }
 
   def build(): Topology = Topology(nodes)
