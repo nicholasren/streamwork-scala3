@@ -3,15 +3,9 @@ package ren.nicholas.streamwork.core
 import scala.collection.mutable.ListBuffer
 import ren.nicholas.streamwork.core.KStream
 
-class Topology {
+class Topology(nodes: List[Node]) {
 
-}
-
-class StreamBuilder {
-  def source[T](name: String, source: Source[T]): KStream[T] = {
-    val stream: KStream[T] = KStream[T]()
-    stream
+  def executorOf(name: String): Option[Executor[? <: Any, ? <: Any]] = {
+    nodes.find(_.name == name).map(_.executor)
   }
-
-  def build(): Topology = ???
 }

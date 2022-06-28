@@ -2,7 +2,7 @@ package ren.nicholas.streamwork.core
 
 import scala.collection.mutable
 
-trait Sink[T] extends KStream[T] {
+trait Sink[T] {
   def all: List[T]
 
   def push(t: T): Unit

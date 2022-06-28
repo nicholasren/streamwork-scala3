@@ -16,6 +16,6 @@ class TopologyBuilderTest extends AnyFunSpec with should.Matchers {
 
     val topology = streamBuilder.build()
 
-    println(topology)
+    topology.executorOf("numbers").get.outgoing shouldBe topology.executorOf("result").get.incoming
   }
 }

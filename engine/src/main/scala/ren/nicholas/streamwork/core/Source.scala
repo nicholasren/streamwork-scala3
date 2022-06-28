@@ -2,7 +2,7 @@ package ren.nicholas.streamwork.core
 
 import scala.collection.mutable
 
-trait Source[T] extends KStream[T] {
+trait Source[T] {
   def get: T
 }
 
