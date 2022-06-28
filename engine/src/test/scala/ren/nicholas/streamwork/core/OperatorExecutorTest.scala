@@ -3,6 +3,7 @@ package ren.nicholas.streamwork.core
 import org.scalatest.matchers.should
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.BeforeAndAfter
+import ren.nicholas.streamwork.core.executor.OperatorExecutor
 
 import scala.collection.mutable
 

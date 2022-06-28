@@ -1,4 +1,8 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.core.stream
+
+import ren.nicholas.streamwork.core.executor.{Executor, SourceExecutor}
+import ren.nicholas.streamwork.core.stream.{KStream, Source}
+import ren.nicholas.streamwork.core.Topology
 
 
 case class Node(name: String, executor: Executor[? <: Any, ? <: Any])

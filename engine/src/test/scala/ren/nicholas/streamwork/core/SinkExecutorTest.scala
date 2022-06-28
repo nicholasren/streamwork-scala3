@@ -3,6 +3,8 @@ package ren.nicholas.streamwork.core
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
 import org.scalatest.*
+import ren.nicholas.streamwork.core.executor.SinkExecutor
+import ren.nicholas.streamwork.core.stream.InMemorySink
 
 import scala.collection.mutable
 

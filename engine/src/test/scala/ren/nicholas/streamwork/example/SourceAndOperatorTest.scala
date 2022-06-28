@@ -2,7 +2,8 @@ package ren.nicholas.streamwork.example
 
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
-import ren.nicholas.streamwork.core.{Sink, Source, StreamBuilder, Topology}
+import ren.nicholas.streamwork.core.stream.{Sink, Source, StreamBuilder}
+import ren.nicholas.streamwork.core.Topology
 
 import scala.concurrent.Await
 import scala.concurrent.duration.Duration

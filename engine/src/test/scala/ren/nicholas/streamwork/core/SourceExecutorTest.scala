@@ -3,6 +3,8 @@ package ren.nicholas.streamwork.core
 import org.scalatest.BeforeAndAfter
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
+import ren.nicholas.streamwork.core.executor.SourceExecutor
+import ren.nicholas.streamwork.core.stream.Source
 
 import scala.collection.mutable.ListBuffer
 

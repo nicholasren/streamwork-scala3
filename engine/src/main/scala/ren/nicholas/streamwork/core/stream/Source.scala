@@ -1,4 +1,6 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.core.stream
+
+import ren.nicholas.streamwork.core.stream.Source
 
 import scala.collection.mutable
 

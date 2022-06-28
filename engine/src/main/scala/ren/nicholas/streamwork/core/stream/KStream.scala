@@ -1,4 +1,8 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.core.stream
+
+import ren.nicholas.streamwork.core.executor.{Executor, SinkExecutor}
+import ren.nicholas.streamwork.core.stream.Sink
+import ren.nicholas.streamwork.core.stream.StreamBuilder
 
 import scala.collection.mutable
 
