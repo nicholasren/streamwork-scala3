@@ -1,16 +1,16 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.core.topology
 
-import scala.collection.mutable.ListBuffer
 import ren.nicholas.streamwork.core.executor.Executor
-import ren.nicholas.streamwork.core.stream.{KStream, Node}
+import ren.nicholas.streamwork.core.stream.KStream
 
 import java.util.concurrent.Executors
+import java.util.concurrent.Executors.newFixedThreadPool
 import scala.concurrent.ExecutionContext.fromExecutor
 import scala.concurrent.Future
 
 class Topology(nodes: List[Node]) {
 
-  implicit val ec: scala.concurrent.ExecutionContext = fromExecutor(Executors.newFixedThreadPool(4))
+  implicit val ec: scala.concurrent.ExecutionContext = fromExecutor(newFixedThreadPool(4))
 
   def executorOf(name: String): Option[Executor[? <: Any, ? <: Any]] = nodes.find(_.name == name).map(_.executor)
 

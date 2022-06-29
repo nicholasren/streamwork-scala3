@@ -2,10 +2,9 @@ package ren.nicholas.streamwork.core.stream
 
 import ren.nicholas.streamwork.core.executor.{Executor, SourceExecutor}
 import ren.nicholas.streamwork.core.stream.{KStream, Source}
-import ren.nicholas.streamwork.core.Topology
+import ren.nicholas.streamwork.core.topology
+import ren.nicholas.streamwork.core.topology.{Node, Topology}
 
-
-case class Node(name: String, executor: Executor[? <: Any, ? <: Any])
 
 class StreamBuilder() {
   var nodes: List[Node] = List()
@@ -17,7 +16,7 @@ class StreamBuilder() {
   private[stream]
   def add[Out](name: String, executor: Executor[? <: Any, Out]): KStream[Out] = {
     val stream: KStream[Out] = KStream[Out](this, executor)
-    nodes = Node(name, executor) :: nodes
+    nodes = topology.Node(name, executor) :: nodes
     stream
   }
 
