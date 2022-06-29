@@ -17,7 +17,7 @@ class TopologyBuilderTest extends AnyFunSpec with should.Matchers {
 
     val topology = streamBuilder.build()
 
-    topology.executorOf("numbers").get.outgoing shouldBe topology.executorOf("result").get.incoming
+    topology.executorOf("numbers").get.outgoingOpt shouldBe topology.executorOf("result").get.incomingOpt
   }
 
   describe("source and operator should be connected via queue") {
@@ -36,7 +36,7 @@ class TopologyBuilderTest extends AnyFunSpec with should.Matchers {
     val operatorExecutor = topology.executorOf("double").get
     val sinkExecutor = topology.executorOf("result").get
 
-    sourceExecutor.outgoing shouldBe operatorExecutor.incoming
-    operatorExecutor.outgoing shouldBe sinkExecutor.incoming
+    sourceExecutor.outgoingOpt shouldBe operatorExecutor.incomingOpt
+    operatorExecutor.outgoingOpt shouldBe sinkExecutor.incomingOpt
   }
 }

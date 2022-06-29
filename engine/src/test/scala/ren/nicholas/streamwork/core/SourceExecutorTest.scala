@@ -17,7 +17,7 @@ class SourceExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matc
     describe("runOne") {
       it("should push event to outgoing queue") {
         sourceExecutor.runOnce()
-        sourceExecutor.outgoing.get should contain only ("one")
+        sourceExecutor.outgoing should contain only "one"
       }
     }
   }

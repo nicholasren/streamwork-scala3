@@ -5,9 +5,9 @@ import scala.collection.mutable
 
 trait Executor[In, Out] {
 
-  def incoming: Option[ConcurrentLinkedQueue[In]]
+  def incomingOpt: Option[ConcurrentLinkedQueue[In]]
 
-  def outgoing: Option[ConcurrentLinkedQueue[Out]]
+  def outgoingOpt: Option[ConcurrentLinkedQueue[Out]]
 
   def runOnce(): Unit
 

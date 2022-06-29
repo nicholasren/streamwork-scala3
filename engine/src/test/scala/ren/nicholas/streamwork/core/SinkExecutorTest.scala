@@ -1,20 +1,21 @@
 package ren.nicholas.streamwork.core
 
+import org.scalatest.*
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
-import org.scalatest.*
 import ren.nicholas.streamwork.core.executor.SinkExecutor
 import ren.nicholas.streamwork.core.stream.InMemorySink
+
 import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
-import scala.jdk.CollectionConverters._
+import scala.jdk.CollectionConverters.*
 
 
 class SinkExecutorTest extends AnyFunSpec with should.Matchers {
 
   val incoming: ConcurrentLinkedQueue[String] = ConcurrentLinkedQueue[String]()
   val sink: InMemorySink[String] = InMemorySink[String]()
-  val executor: SinkExecutor[String] = SinkExecutor(Some(incoming), sink)
+  val executor: SinkExecutor[String] = SinkExecutor(incoming, sink)
 
   describe("runOnce") {
     it("no operation when incoming queue is empty") {
