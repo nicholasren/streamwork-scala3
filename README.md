@@ -1,21 +1,35 @@
 ## sbt project compiled with Scala 3
 
-Goals: no mutable state in stream work
+### Goals
 
-### TODO
-
-first implementation engine
-is there an way to build it without mutable state?
+- Simple stream processing engine that:
+    - have basic concepts in stream processing engine
+        - source, operator, sink
+    - support operations
+        - map
+        - parallelism
+        - fan-out
+        - fan-in
+        - delivery semantics
+        - windowed computation
+        - joining operation
+        - backpressure
+        - stateful operation
+    - can run on multiple machines
 
 ### Tasks
 
 - [x] Sink & SinkExecutor
 - [x] Source and SourceExecutor
 - [x] Operator and OperatorExecutor
-- [ ] Topology that connect above components
-  - [x] construct stream 
-    - [x]source and sink should be connected via queues
-    - [x]source and operator should be connected via queues
-  - [x] start streams
-  - [ ] use thread safe queue
-  - [ ] stop streams
+- [x] Topology that connect above components
+    - [x] construct stream
+      - [x]source and sink should be connected via queues
+      - [x]source and operator should be connected via queues
+    - [x] start streams
+    - [x] use thread-safe queue
+    - [ ] stop streams
+
+### Future
+
+is there an way to build it without mutable state?
