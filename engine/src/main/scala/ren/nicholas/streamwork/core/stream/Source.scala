@@ -4,9 +4,9 @@ import ren.nicholas.streamwork.core.stream.Source
 
 import scala.collection.mutable
 
-trait Source[T] {
+trait Source[T]:
   def get: T
-}
+
 
 object Source {
   def of[T](ts: T*): Source[T] = new Source[T] :

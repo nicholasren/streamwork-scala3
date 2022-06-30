@@ -3,7 +3,7 @@ package ren.nicholas.streamwork.core.executor
 import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
 
-trait Executor[In, Out] {
+trait Executor[In, Out]:
 
   def incomingOpt: Option[ConcurrentLinkedQueue[In]]
 
@@ -12,4 +12,3 @@ trait Executor[In, Out] {
   def runOnce(): Unit
 
   def run(): Unit = while true do runOnce()
-}

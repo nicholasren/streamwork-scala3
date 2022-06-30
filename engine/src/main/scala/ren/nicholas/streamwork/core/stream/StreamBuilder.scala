@@ -6,19 +6,16 @@ import ren.nicholas.streamwork.core.topology
 import ren.nicholas.streamwork.core.topology.{Node, Topology}
 
 
-class StreamBuilder() {
+class StreamBuilder():
   var nodes: List[Node] = List()
 
-  def source[Out](name: String, source: Source[Out]): KStream[Out] = {
+  def source[Out](name: String, source: Source[Out]): KStream[Out] =
     this.add(name, SourceExecutor(source))
-  }
 
   private[stream]
-  def add[Out](name: String, executor: Executor[? <: Any, Out]): KStream[Out] = {
-    val stream: KStream[Out] = KStream[Out](this, executor)
+  def add[Out](name: String, executor: Executor[? <: Any, Out]): KStream[Out] =
     nodes = topology.Node(name, executor) :: nodes
-    stream
-  }
+    KStream[Out](this, executor)
+
 
   def build(): Topology = Topology(nodes)
-}

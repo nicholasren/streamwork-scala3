@@ -9,6 +9,5 @@ class InMemorySink[T] extends Sink[T] :
 
   def all: List[T] = mem.toList
 
-  def push(t: T): Unit =
-    mem.enqueue(t)
+  def push(t: T): Unit = mem.enqueue(t)
 

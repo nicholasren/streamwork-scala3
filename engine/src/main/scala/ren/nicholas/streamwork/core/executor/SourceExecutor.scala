@@ -7,7 +7,7 @@ import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
 
 
-class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] {
+class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] :
   val outgoingOpt: Option[ConcurrentLinkedQueue[R]] = Some(ConcurrentLinkedQueue[R]())
   val incomingOpt: Option[ConcurrentLinkedQueue[Unit]] = None
   val outgoing: ConcurrentLinkedQueue[R] = outgoingOpt.get
@@ -17,7 +17,5 @@ class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] {
    *
    * @return true if the thread should continue; false if the thread should exist.
    */
-  def runOnce(): Unit = {
-    outgoingOpt.get.offer(source.get)
-  }
-}
+  def runOnce(): Unit = outgoingOpt.get.offer(source.get)
+
