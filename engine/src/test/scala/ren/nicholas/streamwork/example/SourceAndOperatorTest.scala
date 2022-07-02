@@ -6,12 +6,13 @@ import org.scalatest.matchers.should
 import ren.nicholas.streamwork.core.stream.{Sink, Source, StreamBuilder}
 import ren.nicholas.streamwork.core.topology.Topology
 
+import scala.compiletime.uninitialized
 import scala.concurrent.Await
 import scala.concurrent.duration.{Duration, SECONDS}
 
 class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
-  var source: Source[Int] = _
-  var streamBuilder: StreamBuilder = _
+  var source: Source[Int] = uninitialized
+  var streamBuilder: StreamBuilder = uninitialized
 
   before {
     source = Source.of(1, 2, 3, 4)

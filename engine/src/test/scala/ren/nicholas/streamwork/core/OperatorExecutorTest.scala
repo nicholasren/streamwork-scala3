@@ -7,12 +7,13 @@ import ren.nicholas.streamwork.core.executor.OperatorExecutor
 
 import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable
+import scala.compiletime.uninitialized
 
 class OperatorExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matchers {
-  describe("A OperatorExecutor") {
-    var operatorExecutor: OperatorExecutor[String, Int] = null
-    var incoming: ConcurrentLinkedQueue[String] = null
+  var operatorExecutor: OperatorExecutor[String, Int] = uninitialized
+  var incoming: ConcurrentLinkedQueue[String] = uninitialized
 
+  describe("A OperatorExecutor") {
     before {
       incoming = ConcurrentLinkedQueue()
       operatorExecutor = new OperatorExecutor[String, Int](incoming, _.length)
