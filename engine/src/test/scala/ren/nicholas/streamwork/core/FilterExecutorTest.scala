@@ -13,7 +13,7 @@ class FilterExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matc
   var executor: FilterExecutor[String] = uninitialized
   var incoming: ConcurrentLinkedQueue[String] = uninitialized
 
-  describe("it should only send to downstream when predicate is met") {
+  describe("FilterExecutor") {
     before {
       incoming = ConcurrentLinkedQueue()
       executor = new FilterExecutor[String](incoming, _.length > 3)
@@ -21,12 +21,13 @@ class FilterExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matc
 
     it("should only send to downstream when predicate is met") {
       incoming.offer("hello")
-      incoming.offer("world")
       incoming.offer("cat")
+      incoming.offer("world")
 
       1 to 3 foreach {
         _ => executor.runOnce()
       }
+
       executor.outgoing.asScala.toList should contain allOf("hello", "world")
     }
   }
