@@ -1,4 +1,4 @@
-package ren.nicholas.streamwork.core.stream
+package ren.nicholas.streamwork.stream
 
 import ren.nicholas.streamwork.core.stream.Sink
 

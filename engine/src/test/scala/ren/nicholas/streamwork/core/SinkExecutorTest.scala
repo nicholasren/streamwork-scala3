@@ -4,7 +4,7 @@ import org.scalatest.*
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
 import ren.nicholas.streamwork.core.executor.SinkExecutor
-import ren.nicholas.streamwork.core.stream.InMemorySink
+import ren.nicholas.streamwork.stream.InMemorySink
 
 import java.util.concurrent.ConcurrentLinkedQueue
 import scala.collection.mutable

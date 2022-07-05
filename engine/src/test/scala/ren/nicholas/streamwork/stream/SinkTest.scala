@@ -1,12 +1,10 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.stream
 
-import scala.collection.mutable
-
+import org.scalatest.*
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers.*
-import org.scalatest._
 
-import ren.nicholas.streamwork.core.stream.InMemorySink
+import scala.collection.mutable
 
 class SinkTest extends AnyFunSpec {
 
