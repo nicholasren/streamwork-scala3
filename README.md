@@ -29,7 +29,14 @@
     - [x] start streams
     - [x] use thread-safe queue
     - [ ] stop streams
-
+- [ ] filter
+- [ ] parallelism
 ### Future
 
 is there an way to build it without mutable state?
+
+
+Example code:
+```sh
+$HOME/projects/lab/GrokkingStreamingSystems
+```

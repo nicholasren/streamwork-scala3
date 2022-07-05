@@ -11,5 +11,7 @@ class KStream[T](builder: StreamBuilder, executor: Executor[? <: Any, T]):
   def map[Out](name: String, f: T => Out): KStream[Out] =
     this.builder.add(name, OperatorExecutor(this.outgoing.get, f))
 
+  def filter[Out](name: String, p: T => Boolean): KStream[Out] = ???
+
   def to(name: String, sink: Sink[T]): Unit =
     this.builder.add(name, SinkExecutor(this.outgoing.get, sink))

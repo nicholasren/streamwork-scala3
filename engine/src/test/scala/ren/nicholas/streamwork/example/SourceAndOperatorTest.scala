@@ -62,5 +62,20 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeA
 
       sink.all should contain allOf("2", "4", "6", "8")
     }
+
+    it("should read from source and apply operators and send to sink") {
+      val sink: Sink[Int] = Sink.empty()
+
+      streamBuilder
+        .source("numbers", source)
+        .map("double", _ * 2)
+        .filter( "greater_than_five", _ > 5)
+        .to("result", sink)
+      val topology = streamBuilder.build()
+      topology.run()
+      Thread.sleep(1000)
+
+      sink.all should contain allOf(6, 8)
+    }
   }
 }
