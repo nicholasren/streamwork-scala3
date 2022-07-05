@@ -63,7 +63,7 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeA
       sink.all should contain allOf("2", "4", "6", "8")
     }
 
-    it("should read from source and apply operators and send to sink") {
+    it("should read from source and apply filter and send to sink") {
       val sink: Sink[Int] = Sink.empty()
 
       streamBuilder

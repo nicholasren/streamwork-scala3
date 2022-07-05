@@ -29,7 +29,7 @@
     - [x] start streams
     - [x] use thread-safe queue
     - [ ] stop streams
-- [ ] filter
+- [x] filter
 - [ ] parallelism
 ### Future
 
