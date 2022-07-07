@@ -21,7 +21,7 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeA
 
   describe("simple stream run") {
     it("should read from source and send to sink") {
-      val sink: Sink[Int] = Sink.empty()
+      val sink: Sink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
@@ -34,7 +34,7 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeA
     }
 
     it("should read from source and apply operator and send to sink") {
-      val sink: Sink[Int] = Sink.empty()
+      val sink: Sink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
@@ -49,7 +49,7 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeA
     }
 
     it("should read from source and apply operators and send to sink") {
-      val sink: Sink[String] = Sink.empty()
+      val sink: Sink[String] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
@@ -64,7 +64,7 @@ class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeA
     }
 
     it("should read from source and apply filter and send to sink") {
-      val sink: Sink[Int] = Sink.empty()
+      val sink: Sink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)

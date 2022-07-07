@@ -3,6 +3,7 @@ package ren.nicholas.streamwork.stream
 import org.scalatest.*
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should.Matchers.*
+import ren.nicholas.streamwork.core.stream.Sink
 
 import scala.collection.mutable
 
@@ -11,7 +12,7 @@ class SinkTest extends AnyFunSpec {
   describe("InMemorySink") {
 
     it("should hold ingress data in memory") {
-      val sink = InMemorySink[String]()
+      val sink: Sink[String] = Sink.memory()
       sink.push("one")
       sink.push("two")
       sink.push("three")

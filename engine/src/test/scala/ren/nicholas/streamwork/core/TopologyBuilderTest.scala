@@ -8,7 +8,7 @@ class TopologyBuilderTest extends AnyFunSpec with should.Matchers {
 
   describe("source and sink should be connected via queue") {
     val source: Source[Int] = Source.of(1, 2, 3, 4)
-    val sink: Sink[Int] = Sink.empty()
+    val sink: Sink[Int] = Sink.memory()
     val streamBuilder = StreamBuilder()
 
     streamBuilder
@@ -22,7 +22,7 @@ class TopologyBuilderTest extends AnyFunSpec with should.Matchers {
 
   describe("source and operator should be connected via queue") {
     val source: Source[Int] = Source.of(1, 2, 3, 4)
-    val sink: Sink[Int] = Sink.empty()
+    val sink: Sink[Int] = Sink.memory()
     val streamBuilder = StreamBuilder()
 
     streamBuilder

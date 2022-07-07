@@ -17,7 +17,7 @@ class ConsoleSink[T] extends Sink[T] :
 object Sink {
   def console[T](): ConsoleSink[T] = new ConsoleSink[T]
 
-  def empty[T](): Sink[T] = new Sink[T] :
+  def memory[T](): Sink[T] = new Sink[T] :
     private val xs: mutable.Queue[T] = mutable.Queue.empty
 
     override def all: List[T] = xs.toList
