@@ -1,6 +1,8 @@
 import sbt.Keys.libraryDependencies
 
 val scala3Version = "3.1.2"
+val zioVersion = "2.0.0"
+
 lazy val commonSettings = Seq(
   version := "0.1.0",
   scalaVersion := scala3Version,
@@ -21,3 +23,10 @@ lazy val engine = project
     commonSettings,
     libraryDependencies += "io.javalin" % "javalin" % "4.6.3",
   )
+
+lazy val example = project
+  .in(file("example"))
+  .settings(
+    name := "example",
+    commonSettings
+  ).dependsOn(engine)

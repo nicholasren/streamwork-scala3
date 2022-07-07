@@ -9,7 +9,14 @@ trait Sink[T]:
   def push(t: T): Unit
 
 
+class ConsoleSink[T] extends Sink[T] :
+  override def all: List[T] = List()
+
+  override def push(t: T): Unit = println(t)
+
 object Sink {
+  def console[T](): ConsoleSink[T] = new ConsoleSink[T]
+
   def empty[T](): Sink[T] = new Sink[T] :
     private val xs: mutable.Queue[T] = mutable.Queue.empty
 
