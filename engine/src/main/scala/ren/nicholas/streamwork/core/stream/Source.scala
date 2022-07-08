@@ -9,6 +9,9 @@ trait Source[T]:
 
 
 object Source {
+  def continually[T](elem: => T): Source[T] = new Source[T] :
+    override def get: T = elem
+
   def of[T](ts: T*): Source[T] = new Source[T] :
     private val xs: mutable.Queue[T] = mutable.Queue.from(ts)
 

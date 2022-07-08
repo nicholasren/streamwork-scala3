@@ -1,6 +1,8 @@
 import ren.nicholas.streamwork.core.stream.*
 import ren.nicholas.streamwork.core.topology.Topology
 
+import scala.util.Random.{nextInt, shuffle}
+
 object MyApp extends App {
   private val streamBuilder = StreamBuilder()
 
@@ -15,8 +17,9 @@ object MyApp extends App {
   )
 
   streamBuilder
-    .source("source", Source.of(people: _*))
-    .filter("isHost", _.isHost)
+    .source("source", Source.continually(shuffle(people).head))
+    .map("change age", p => Person(p.name, nextInt(100), p.isHost))
+    .filter("is host", _.isHost)
     .to("print", Sink.console())
 
   val topology: Topology = streamBuilder.build()
