@@ -6,7 +6,7 @@
     - have basic concepts in stream processing engine
         - source, operator, sink
     - support operations
-        - map
+        - transform
         - parallelism
         - fan-out
         - fan-in

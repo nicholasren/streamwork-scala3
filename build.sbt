@@ -1,6 +1,6 @@
 import sbt.Keys.libraryDependencies
 
-val scala3Version = "3.1.2"
+val scala3Version = "3.1.3"
 val zioVersion = "2.0.0"
 
 lazy val commonSettings = Seq(

@@ -1,12 +1,11 @@
 package ren.nicholas.streamwork.core.topology
 
 import ren.nicholas.streamwork.core.executor.Executor
-import ren.nicholas.streamwork.core.stream.KStream
 
 import java.util.concurrent.Executors
 import java.util.concurrent.Executors.newFixedThreadPool
-import scala.concurrent.ExecutionContext.fromExecutor
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext.fromExecutor
 
 class Topology(nodes: List[Node]):
   given executionContext: ExecutionContext = fromExecutor(newFixedThreadPool(4))
@@ -15,6 +14,5 @@ class Topology(nodes: List[Node]):
     nodes.find(_.name == name).map(_.executor)
 
   def run(): Future[Unit] =
-    val value: List[Future[Unit]] = nodes.reverse.map(_.executor).map(executor => Future(executor.run()))
+    val value: List[Future[Unit]] = nodes.map(node => Future(node.executor.run()))
     Future(value.map(_.value).head)
-

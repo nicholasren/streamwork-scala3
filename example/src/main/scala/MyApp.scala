@@ -3,10 +3,10 @@ import ren.nicholas.streamwork.core.topology.Topology
 
 import scala.util.Random.{nextInt, shuffle}
 
+case class Person(name: String, age: Int, isHost: Boolean)
+
 object MyApp extends App {
   private val streamBuilder = StreamBuilder()
-
-  case class Person(name: String, age: Int, isHost: Boolean)
 
   val people = List(
     Person("Bernard", 55, true),
@@ -24,4 +24,5 @@ object MyApp extends App {
 
   val topology: Topology = streamBuilder.build()
   topology.run()
+  
 }
