@@ -8,8 +8,9 @@ import java.util.concurrent.ConcurrentLinkedQueue
 class KStream[In](builder: StreamBuilder, executor: Executor[? <: Any, In]):
   val outgoing: Option[ConcurrentLinkedQueue[In]] = executor.outgoingOpt
 
-  def map[Out](name: String, f: In => Out): KStream[Out] =
+  def map[Out](name: String, f: In => Out, parallelism: Int = 1): KStream[Out] =
     this.builder.add(name, OperatorExecutor(this.outgoing.get, f))
+
 
   def filter(name: String, p: In => Boolean): KStream[In] =
     this.builder.add(name, FilterExecutor(this.outgoing.get, p))

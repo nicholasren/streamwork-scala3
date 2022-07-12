@@ -2,6 +2,7 @@ package ren.nicholas.streamwork.core.topology
 
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
+import ren.nicholas.streamwork.core.executor.Executor
 import ren.nicholas.streamwork.core.stream.{Sink, Source, StreamBuilder}
 
 class TopologyBuilderTest extends AnyFunSpec with should.Matchers {
