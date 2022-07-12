@@ -1,4 +1,4 @@
-package ren.nicholas.streamwork.example
+package ren.nicholas.streamwork.core.topology
 
 import org.scalatest.BeforeAndAfter
 import org.scalatest.funspec.AnyFunSpec
@@ -10,7 +10,7 @@ import scala.compiletime.uninitialized
 import scala.concurrent.Await
 import scala.concurrent.duration.{Duration, SECONDS}
 
-class SourceAndOperatorTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
+class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
   var source: Source[Int] = uninitialized
   var streamBuilder: StreamBuilder = uninitialized
 

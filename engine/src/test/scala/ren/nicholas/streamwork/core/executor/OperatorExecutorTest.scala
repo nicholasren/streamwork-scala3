@@ -1,4 +1,4 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.core.executor
 
 import org.scalatest.BeforeAndAfter
 import org.scalatest.funspec.AnyFunSpec

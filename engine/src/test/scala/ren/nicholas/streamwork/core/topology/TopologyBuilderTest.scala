@@ -1,4 +1,4 @@
-package ren.nicholas.streamwork.core
+package ren.nicholas.streamwork.core.topology
 
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should

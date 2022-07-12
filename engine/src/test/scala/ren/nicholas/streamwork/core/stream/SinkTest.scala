@@ -1,4 +1,4 @@
-package ren.nicholas.streamwork.stream
+package ren.nicholas.streamwork.core.stream
 
 import org.scalatest.*
 import org.scalatest.funspec.AnyFunSpec
