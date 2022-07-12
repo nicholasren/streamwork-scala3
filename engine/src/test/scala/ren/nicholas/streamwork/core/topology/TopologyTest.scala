@@ -19,7 +19,7 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
     streamBuilder = StreamBuilder()
   }
 
-  describe("simple stream run") {
+  describe("single partition stream run") {
     it("should read from source and send to sink") {
       val sink: Sink[Int] = Sink.memory()
 
@@ -42,8 +42,9 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
         .to("result", sink)
 
       val topology = streamBuilder.build()
+
       topology.run()
-      Thread.sleep(1000)
+      Thread.sleep(2000)
 
       sink.all should contain allOf(2, 4, 6, 8)
     }
@@ -58,8 +59,8 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()
-      Thread.sleep(1000)
-
+      Thread.sleep(2000)
+      print(topology.string())
       sink.all should contain allOf("2", "4", "6", "8")
     }
 
@@ -69,13 +70,28 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
       streamBuilder
         .source("numbers", source)
         .map("double", _ * 2)
-        .filter( "greater_than_five", _ > 5)
+        .filter("greater_than_five", _ > 5)
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()
       Thread.sleep(1000)
 
       sink.all should contain allOf(6, 8)
+    }
+  }
+
+  describe("multiple partition stream run") {
+    it("should read from source and send to sink") {
+      val sink: Sink[Int] = Sink.memory()
+
+      streamBuilder
+        .source("numbers", source, 2)
+        .to("result", sink)
+      val topology = streamBuilder.build()
+      topology.run()
+      Thread.sleep(1000)
+
+      sink.all should contain allOf(1, 2, 3, 4)
     }
   }
 }

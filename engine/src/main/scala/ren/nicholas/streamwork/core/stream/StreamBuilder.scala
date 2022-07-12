@@ -9,13 +9,15 @@ import ren.nicholas.streamwork.core.topology.{Node, Topology}
 class StreamBuilder():
   var nodes: List[Node] = List()
 
-  def source[Out](name: String, source: Source[Out]): KStream[Out] =
-    this.add(name, SourceExecutor(source))
+  def source[Out](name: String, source: Source[Out], parallelism: Int = 1): KStream[Out] =
+    val executors = (0 to parallelism).map(_ => SourceExecutor(source))
+    this.add(name, executors)
 
   private[stream]
-  def add[Out](name: String, executor: Executor[? <: Any, Out]): KStream[Out] =
-    nodes = topology.Node(name, executor) :: nodes
-    KStream[Out](this, executor)
+  def add[Out](name: String, executors: Seq[Executor[? <: Any, Out]]): KStream[Out] =
+    val node = topology.Node(name, executors)
+    nodes = node :: nodes
+    KStream[Out](this, executors)
 
 
-  def build(): Topology = Topology(nodes)
+  def build(): Topology = Topology(nodes.reverse)

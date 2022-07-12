@@ -12,3 +12,10 @@ trait Executor[In, Out]:
   def runOnce(): Unit
 
   def run(): Unit = while true do runOnce()
+
+  def show(): String =
+    s"${show(incomingOpt)} ==> ${show(outgoingOpt)}"
+
+  private def show(queue: Option[ConcurrentLinkedQueue[?]]): String = queue match
+    case Some(q) => s"${q.hashCode()}"
+    case None => "none"

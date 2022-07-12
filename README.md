@@ -31,9 +31,12 @@
     - [ ] stop streams
 - [x] filter
 - [ ] parallelism
+  - converted each node to parallelism
+  - refactor
+  - different parallelism per operator
 ### Future
 
-is there an way to build it without mutable state?
+is there a way to build it without mutable state?
 
 
 Example code:
