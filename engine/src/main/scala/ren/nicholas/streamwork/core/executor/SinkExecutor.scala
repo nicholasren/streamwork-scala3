@@ -10,8 +10,6 @@ class SinkExecutor[T](val incoming: ConcurrentLinkedQueue[T], sink: Sink[T]) ext
   override val incomingOpt: Option[ConcurrentLinkedQueue[T]] = Some(incoming)
   override val outgoingOpt: Option[ConcurrentLinkedQueue[Unit]] = None
 
-  def runOnce(): Unit =
-    if !incoming.isEmpty then
-      val t = incoming.poll()
-      sink.push(t)
-    end if
+  def runOnce(in: Option[T]): Unit = in match
+    case Some(t) => sink.push(t)
+    case _ => ()

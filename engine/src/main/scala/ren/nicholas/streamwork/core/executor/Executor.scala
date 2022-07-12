@@ -9,9 +9,12 @@ trait Executor[In, Out]:
 
   def outgoingOpt: Option[ConcurrentLinkedQueue[Out]]
 
-  def runOnce(): Unit
+  def runOnce(in: Option[In]): Unit
 
-  def run(): Unit = while true do runOnce()
+  def run(): Unit = while (true) {
+    val maybeIn: Option[In] = incomingOpt.flatMap { queue => Option(queue.poll()) }
+    runOnce(maybeIn)
+  }
 
   def show(): String =
     s"${show(incomingOpt)} ==> ${show(outgoingOpt)}"

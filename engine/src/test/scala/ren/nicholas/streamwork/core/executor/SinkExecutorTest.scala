@@ -19,20 +19,12 @@ class SinkExecutorTest extends AnyFunSpec with should.Matchers {
 
   describe("runOnce") {
     it("no operation when incoming queue is empty") {
-      executor.runOnce()
+      executor.runOnce(None)
       sink.all shouldBe List()
     }
 
     it("poll record from incoming queue and push to sink") {
-      incoming.addAll(List("one", "two", "three").asJava)
-
-      executor.runOnce()
-      sink.all shouldBe List("one")
-
-      executor.runOnce()
-      sink.all shouldBe List("one", "two")
-
-      executor.runOnce()
+      List("one", "two", "three").map(Some.apply).foreach(executor.runOnce)
       sink.all shouldBe List("one", "two", "three")
     }
   }

@@ -17,5 +17,5 @@ class SourceExecutor[R](val source: Source[R]) extends Executor[Unit, R] :
    *
    * @return true if the thread should continue; false if the thread should exist.
    */
-  def runOnce(): Unit = outgoingOpt.get.offer(source.get)
+  def runOnce(in: Option[Unit]): Unit = outgoingOpt.get.offer(source.get)
 

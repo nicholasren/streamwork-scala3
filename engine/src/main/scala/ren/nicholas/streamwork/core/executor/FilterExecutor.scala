@@ -10,10 +10,7 @@ class FilterExecutor[T](
   override val incomingOpt: Option[ConcurrentLinkedQueue[T]] = Some(incoming)
   override val outgoingOpt: Option[ConcurrentLinkedQueue[T]] = Some(outgoing)
 
-  def runOnce(): Unit =
-    if !incoming.isEmpty then
-      val element = incoming.poll()
-      if predicate(element) then
-        outgoing.offer(element)
-    end if
+  def runOnce(in: Option[T]): Unit = in match
+    case Some(value) if predicate(value) => outgoing.offer(value)
+    case _ => ()
 }

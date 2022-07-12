@@ -8,8 +8,9 @@ class OperatorExecutor[T, R](val incoming: ConcurrentLinkedQueue[T], val operato
   override val incomingOpt: Option[ConcurrentLinkedQueue[T]] = Some(incoming)
   override val outgoingOpt: Option[ConcurrentLinkedQueue[R]] = Some(outgoing)
 
-  def runOnce(): Unit =
-    if !incoming.isEmpty then
-      val result = operator.apply(incoming.poll())
+  def runOnce(in: Option[T]): Unit = in match
+    case Some(value) =>
+      val result = operator.apply(value)
       outgoing.offer(result)
-    end if
+    case None => ()
+

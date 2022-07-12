@@ -21,16 +21,13 @@ class OperatorExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Ma
 
     describe("runOnce") {
       it("should take element and apply operation") {
-        incoming.offer("One")
-
-        operatorExecutor.runOnce()
+        operatorExecutor.runOnce(Some("One"))
 
         assert(operatorExecutor.outgoing.peek() == 3)
       }
 
       it("should no operation if incoming is empty") {
-        operatorExecutor.runOnce()
-
+        operatorExecutor.runOnce(None)
         assert(operatorExecutor.outgoing.isEmpty)
       }
     }

@@ -20,14 +20,7 @@ class FilterExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matc
     }
 
     it("should only send to downstream when predicate is met") {
-      incoming.offer("hello")
-      incoming.offer("cat")
-      incoming.offer("world")
-
-      1 to 3 foreach {
-        _ => executor.runOnce()
-      }
-
+      List("hello", "cat", "world").map(Some.apply).foreach(executor.runOnce)
       executor.outgoing.asScala.toList should contain allOf("hello", "world")
     }
   }
