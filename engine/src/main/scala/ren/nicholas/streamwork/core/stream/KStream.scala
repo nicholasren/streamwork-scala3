@@ -6,18 +6,15 @@ import ren.nicholas.streamwork.core.topology.Node
 
 import java.util.concurrent.ConcurrentLinkedQueue
 
-class KStream[In](builder: StreamBuilder, executors: Seq[Executor[? <: Any, In]]):
+class KStream[In](builder: StreamBuilder, incoming: Seq[ConcurrentLinkedQueue[In]]):
   def map[Out](name: String, f: In => Out): KStream[Out] =
-    val nextExecutors = nextExecutorOf((executor: Executor[_, In]) => OperatorExecutor(executor.outgoingOpt.get, f))
-    this.builder.add(name, nextExecutors)
+    val next = incoming.map(OperatorExecutor(_, f))
+    this.builder.add(name, next)
 
 
   def filter(name: String, p: In => Boolean): KStream[In] =
-    val nextExecutors = nextExecutorOf((executor: Executor[_, In]) => FilterExecutor(executor.outgoingOpt.get, p))
-    this.builder.add(name, nextExecutors)
+    val next = incoming.map(FilterExecutor(_, p))
+    this.builder.add(name, next)
 
   def to(name: String, sink: Sink[In]): Unit =
-    val nextExecutors = nextExecutorOf((executor: Executor[_, In]) => SinkExecutor(executor.outgoingOpt.get, sink))
-    this.builder.add(name, nextExecutors)
-
-  private def nextExecutorOf[Out](nextOf: Executor[_, In] => Executor[In, Out]): Seq[Executor[In, Out]] = executors.map(executor => nextOf(executor))
+    this.builder.sink(name, incoming, sink)

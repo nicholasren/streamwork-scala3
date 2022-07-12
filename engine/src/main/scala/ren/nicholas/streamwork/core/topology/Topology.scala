@@ -10,9 +10,9 @@ import scala.concurrent.{ExecutionContext, Future, blocking}
 class Topology(nodes: List[Node]):
   given executionContext: ExecutionContext = ExecutionContext.global
 
-  def executorsOf(name: String): List[Executor[? <: Any, ? <: Any]] = nodes.filter(_.name == name).flatMap(_.executors)
+  def executorsOf(name: String): List[AnyExecutor] = nodes.filter(_.name == name).flatMap(_.executors)
 
-  def executorOf(name: String): Option[Executor[? <: Any, ? <: Any]] =
+  def executorOf(name: String): Option[AnyExecutor] =
     nodes.find(_.name == name).map(_.executors.head)
 
   def run(): Unit =
