@@ -18,7 +18,7 @@ class StreamBuilder():
   private[stream]
   def add[Out](name: String, executors: Seq[Executor[_, Out]]): KStream[Out] =
     nodes = topology.Node(name, executors) :: nodes
-    val outgoing: Seq[ConcurrentLinkedQueue[Out]] = executors.map(_.outgoingOpt.get)
+    val outgoing = executors.map(_.outgoingOpt.get)
     KStream(this, outgoing)
 
   private[stream]

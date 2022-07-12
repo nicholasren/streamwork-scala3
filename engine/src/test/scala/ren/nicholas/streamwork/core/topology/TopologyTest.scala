@@ -74,7 +74,7 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()
-      Thread.sleep(1000)
+      Thread.sleep(2000)
 
       sink.all should contain allOf(6, 8)
     }
