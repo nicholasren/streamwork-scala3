@@ -24,16 +24,15 @@
 - [x] Operator and OperatorExecutor
 - [x] Topology that connect above components
     - [x] construct stream
-      - [x]source and sink should be connected via queues
-      - [x]source and operator should be connected via queues
+      - [x] source and sink should be connected via queues
+      - [x] source and operator should be connected via queues
     - [x] start streams
     - [x] use thread-safe queue
     - [ ] stop streams
 - [x] filter
 - [ ] parallelism
-  - converted each node to parallelism
-  - refactor
-  - different parallelism per operator
+  - [ ] converted each node to parallelism
+  - [ ] different parallelism per operator
 ### Future
 
 is there a way to build it without mutable state?
