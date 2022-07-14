@@ -94,4 +94,22 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
       sink.all should contain allOf(1, 2, 3, 4)
     }
   }
+
+  describe("continuous streaming") {
+    it("should only stop when required") {
+      val source: Source[Int] = Source.continually(scala.util.Random.nextInt(100))
+      val sink = Sink.memory[Int]()
+      streamBuilder
+        .source("flow of ints", source)
+        .to("end", sink)
+
+      val topology = streamBuilder.build()
+
+      topology.run()
+      Thread.sleep(2000)
+
+      sink.all.size should be > 100
+      sink.all.forall(_ < 100) shouldBe true
+    }
+  }
 }
