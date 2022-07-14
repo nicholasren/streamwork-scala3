@@ -11,6 +11,10 @@ class FilterExecutor[T](
   override val outgoingOpt: Option[ConcurrentLinkedQueue[T]] = Some(outgoing)
 
   def runOnce(in: Option[T]): Unit = in match
-    case Some(value) if predicate(value) => outgoing.offer(value)
+    case Some(value) if predicate(value) =>
+      logger.info(s"outgoing: $value")
+      outgoing.offer(value)
+    case Some(value) if !predicate(value) =>
+      logger.info(s"dropping: $value")
     case _ => ()
 }

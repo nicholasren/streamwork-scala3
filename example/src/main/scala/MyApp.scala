@@ -17,12 +17,11 @@ object MyApp extends App {
   )
 
   streamBuilder
-    .source("source", Source.continually(shuffle(people).head))
+    .source("source", Source.of(people: _*))
     .map("change age", p => Person(p.name, nextInt(100), p.isHost))
     .filter("is host", _.isHost)
     .to("print", Sink.console())
 
   val topology: Topology = streamBuilder.build()
   topology.run()
-  
 }

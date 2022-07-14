@@ -11,6 +11,7 @@ class OperatorExecutor[T, R](val incoming: ConcurrentLinkedQueue[T], val operato
   def runOnce(in: Option[T]): Unit = in match
     case Some(value) =>
       val result = operator.apply(value)
+      logger.info(s"outgoing: $result")
       outgoing.offer(result)
     case None => ()
 

@@ -31,7 +31,8 @@
     - [ ] stop streams
 - [x] filter
 - [ ] parallelism
-  - [ ] converted each node to parallelism
+  - [x] converted each node to parallelism
+    - [ ] enable logging
   - [ ] different parallelism per operator
 ### Future
 
