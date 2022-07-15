@@ -17,7 +17,8 @@ object MyApp extends App {
   )
 
   streamBuilder
-    .source("source", Source.of(people: _*))
+    .source("source", Source.of(people: _*), 4)
+    //    .source("source", Source.continually(shuffle(people).head)) //FIXME
     .map("change age", p => Person(p.name, nextInt(100), p.isHost))
     .filter("is host", _.isHost)
     .to("print", Sink.console())
