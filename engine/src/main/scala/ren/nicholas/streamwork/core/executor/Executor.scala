@@ -15,15 +15,17 @@ trait Executor[In, Out]:
 
   def runOnce(in: Option[In]): Unit
 
-  def run(): Unit = while (true) {
-    val maybeIn: Option[In] = incomingOpt.flatMap { queue => Option(queue.poll()) }
-    if maybeIn.isDefined then logger.info(s"incoming: ${maybeIn.get}")
-    runOnce(maybeIn)
-  }
+  def run(): Unit =
+    while (true) {
+      val maybeIn: Option[In] = incomingOpt.flatMap { queue => Option(queue.poll()) }
+      if maybeIn.isDefined then logger.info(s"incoming: ${maybeIn.get}")
+      runOnce(maybeIn)
+    }
+
 
   def show(): String =
     s"${show(incomingOpt)} ==> ${show(outgoingOpt)}"
 
   private def show(queue: Option[ConcurrentLinkedQueue[?]]): String = queue match
-    case Some(q) => s"${q.hashCode()}"
+    case Some(q) => s"Q:${q.hashCode()}"
     case None => "none"

@@ -13,7 +13,7 @@ class KStream[In](builder: StreamBuilder, incoming: Seq[ConcurrentLinkedQueue[In
 
 
   def filter(name: String, p: In => Boolean): KStream[In] =
-    val next = incoming.map(FilterExecutor(_, p))
+    val next: Seq[FilterExecutor[In]] = incoming.map(FilterExecutor(_, p))
     this.builder.add(name, next)
 
   def to(name: String, sink: Sink[In]): Unit =

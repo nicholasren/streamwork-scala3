@@ -3,7 +3,7 @@ package ren.nicholas.streamwork.core.topology
 import org.scalatest.BeforeAndAfter
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
-import ren.nicholas.streamwork.core.stream.{Sink, Source, StreamBuilder}
+import ren.nicholas.streamwork.core.stream.{MemSink, Sink, Source, StreamBuilder}
 import ren.nicholas.streamwork.core.topology.Topology
 
 import scala.compiletime.uninitialized
@@ -21,20 +21,19 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
 
   describe("single partition stream run") {
     it("should read from source and send to sink") {
-      val sink: Sink[Int] = Sink.memory()
+      val sink: MemSink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()
-      Thread.sleep(1000)
-
+      sink.blockingForN(4)
       sink.all should contain allOf(1, 2, 3, 4)
     }
 
     it("should read from source and apply operator and send to sink") {
-      val sink: Sink[Int] = Sink.memory()
+      val sink: MemSink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
@@ -44,13 +43,13 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
       val topology = streamBuilder.build()
 
       topology.run()
-      Thread.sleep(2000)
+      sink.blockingForN(4)
 
       sink.all should contain allOf(2, 4, 6, 8)
     }
 
     it("should read from source and apply operators and send to sink") {
-      val sink: Sink[String] = Sink.memory()
+      val sink: MemSink[String] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
@@ -58,14 +57,15 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
         .map("to_string", _.toString)
         .to("result", sink)
       val topology = streamBuilder.build()
+
       topology.run()
-      Thread.sleep(2000)
-      print(topology.string())
+
+      sink.blockingForN(4)
       sink.all should contain allOf("2", "4", "6", "8")
     }
 
     it("should read from source and apply filter and send to sink") {
-      val sink: Sink[Int] = Sink.memory()
+      val sink: MemSink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source)
@@ -74,22 +74,23 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()
-      Thread.sleep(2000)
 
+      sink.blockingForN(2)
       sink.all should contain allOf(6, 8)
     }
   }
 
   describe("multiple partition stream run") {
     it("should read from source and send to sink") {
-      val sink: Sink[Int] = Sink.memory()
+      val sink: MemSink[Int] = Sink.memory()
 
       streamBuilder
         .source("numbers", source, 2)
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()
-      Thread.sleep(1000)
+
+      sink.blockingForN(4)
 
       sink.all should contain allOf(1, 2, 3, 4)
     }
@@ -106,9 +107,9 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
       val topology = streamBuilder.build()
 
       topology.run()
-      Thread.sleep(2000)
 
-      sink.all.size should be > 100
+      sink.blockingForN(100)
+      topology.stop()
       sink.all.forall(_ < 100) shouldBe true
     }
   }

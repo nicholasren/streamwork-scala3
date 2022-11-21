@@ -18,8 +18,7 @@ class StreamBuilder():
   private[stream]
   def add[Out](name: String, executors: Seq[Executor[_, Out]]): KStream[Out] =
     nodes = topology.Node(name, executors) :: nodes
-    val outgoing = executors.map(_.outgoingOpt.get)
-    KStream(this, outgoing)
+    KStream(this, executors.map(_.outgoingOpt.get))
 
   private[stream]
   def sink[In](name: String, incoming: Seq[ConcurrentLinkedQueue[In]], sink: Sink[In]): Unit =
