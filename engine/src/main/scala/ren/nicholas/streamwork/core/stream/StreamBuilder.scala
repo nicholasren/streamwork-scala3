@@ -12,7 +12,7 @@ class StreamBuilder():
   var nodes: List[Node] = List()
 
   def source[Out](name: String, source: Source[Out], parallelism: Int = 1): KStream[Out] =
-    val executors = (0 to parallelism).map(_ => SourceExecutor(source))
+    val executors = (0 until parallelism).map(_ => SourceExecutor(source))
     this.add(name, executors)
 
   private[stream]

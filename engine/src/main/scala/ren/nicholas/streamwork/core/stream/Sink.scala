@@ -17,27 +17,23 @@ class ConsoleSink[T] extends Sink[T] :
 
   override def push(t: T): Unit = println(t)
 
-class MemSink[T] extends Sink[T] :
-  var latch: Option[CountDownLatch] = None
+class MemSink[T](count: Int) extends Sink[T] :
+  var latch: CountDownLatch = CountDownLatch(count)
 
-  def blockingForN(n: Int): Unit =
-    latch = Some(CountDownLatch(n))
-    println(s" ${Thread.currentThread().getName} - waiting for $n")
-    latch.get.await()
-    println(s" ${Thread.currentThread().getName} - passed latch count=${latch.get.getCount}")
+  def blocking(): Unit =
+    latch.await()
 
   private val xs: ConcurrentLinkedQueue[T] = ConcurrentLinkedQueue()
 
   override def all: List[T] = xs.asScala.toList
 
   override def push(t: T): Unit =
+    val from = latch.getCount
     xs.offer(t)
-    if latch.isDefined then
-      println(s" ${Thread.currentThread().getName} - count: ${latch.get.getCount}")
-      latch.get.countDown()
+    latch.countDown()
 
 object Sink {
   def console[T](): ConsoleSink[T] = new ConsoleSink[T]
 
-  def memory[T](): MemSink[T] = new MemSink[T]
+  def memory[T](count: Int = 100): MemSink[T] = new MemSink[T](count)
 }
