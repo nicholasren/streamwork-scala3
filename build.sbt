@@ -30,5 +30,6 @@ lazy val example = project
   .in(file("example"))
   .settings(
     name := "example",
-    commonSettings
+    commonSettings,
+    libraryDependencies += "com.github.javafaker" % "javafaker" % "1.0.2",
   ).dependsOn(engine)

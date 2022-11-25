@@ -5,17 +5,17 @@ import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
 import ren.nicholas.streamwork.core.executor.OperatorExecutor
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
 import scala.collection.mutable
 import scala.compiletime.uninitialized
 
 class OperatorExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matchers {
   var operatorExecutor: OperatorExecutor[String, Int] = uninitialized
-  var incoming: ConcurrentLinkedQueue[String] = uninitialized
+  var incoming: BlockingQueue[String] = uninitialized
 
   describe("A OperatorExecutor") {
     before {
-      incoming = ConcurrentLinkedQueue()
+      incoming = LinkedBlockingQueue[String]()
       operatorExecutor = new OperatorExecutor[String, Int](incoming, _.length)
     }
 

@@ -1,14 +1,14 @@
 package ren.nicholas.streamwork.core.executor
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
 
 class FilterExecutor[T](
-                         val incoming: ConcurrentLinkedQueue[T],
+                         val incoming: BlockingQueue[T],
                          val predicate: T => Boolean
                        ) extends Executor[T, T] {
-  val outgoing: ConcurrentLinkedQueue[T] = ConcurrentLinkedQueue[T]()
-  override val incomingOpt: Option[ConcurrentLinkedQueue[T]] = Some(incoming)
-  override val outgoingOpt: Option[ConcurrentLinkedQueue[T]] = Some(outgoing)
+  val outgoing: BlockingQueue[T] = LinkedBlockingQueue[T](10)
+  override val incomingOpt: Option[BlockingQueue[T]] = Some(incoming)
+  override val outgoingOpt: Option[BlockingQueue[T]] = Some(outgoing)
 
   def runOnce(in: Option[T]): Unit = in match
     case Some(value) if predicate(value) =>

@@ -6,14 +6,14 @@ import org.scalatest.matchers.should
 import ren.nicholas.streamwork.core.executor.SinkExecutor
 import ren.nicholas.streamwork.core.stream.InMemorySink
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
 import scala.collection.mutable
 import scala.jdk.CollectionConverters.*
 
 
 class SinkExecutorTest extends AnyFunSpec with should.Matchers {
 
-  val incoming: ConcurrentLinkedQueue[String] = ConcurrentLinkedQueue[String]()
+  val incoming: BlockingQueue[String] = LinkedBlockingQueue[String]()
   val sink: InMemorySink[String] = InMemorySink[String]()
   val executor: SinkExecutor[String] = SinkExecutor(incoming, sink)
 

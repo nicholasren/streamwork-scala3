@@ -89,7 +89,7 @@ class TopologyTest extends AnyFunSpec with should.Matchers with BeforeAndAfter {
       val sink: MemSink[Int] = Sink.memory(4)
 
       streamBuilder
-        .source("numbers", source, 2)
+        .source("numbers", source, 4)
         .to("result", sink)
       val topology = streamBuilder.build()
       topology.run()

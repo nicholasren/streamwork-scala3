@@ -32,8 +32,8 @@ class MemSink[T](count: Int) extends Sink[T] :
     xs.offer(t)
     latch.countDown()
 
-object Sink {
+object Sink:
   def console[T](): ConsoleSink[T] = new ConsoleSink[T]
 
   def memory[T](count: Int = 100): MemSink[T] = new MemSink[T](count)
-}
+

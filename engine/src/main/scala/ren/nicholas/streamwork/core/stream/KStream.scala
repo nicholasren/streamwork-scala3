@@ -4,9 +4,9 @@ import ren.nicholas.streamwork.core.executor.*
 import ren.nicholas.streamwork.core.stream.{Sink, StreamBuilder}
 import ren.nicholas.streamwork.core.topology.Node
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.{BlockingQueue, ConcurrentLinkedQueue}
 
-class KStream[In](builder: StreamBuilder, incoming: Seq[ConcurrentLinkedQueue[In]]):
+class KStream[In](builder: StreamBuilder, incoming: Seq[BlockingQueue[In]]):
   def map[Out](name: String, f: In => Out): KStream[Out] =
     val next = incoming.map(OperatorExecutor(_, f))
     this.builder.add(name, next)

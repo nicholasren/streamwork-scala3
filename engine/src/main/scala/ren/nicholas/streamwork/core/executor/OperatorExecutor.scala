@@ -1,12 +1,13 @@
 package ren.nicholas.streamwork.core.executor
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.BlockingQueue
+import java.util.concurrent.LinkedBlockingQueue
 import scala.collection.mutable
 
-class OperatorExecutor[T, R](val incoming: ConcurrentLinkedQueue[T], val operator: T => R) extends Executor[T, R] :
-  val outgoing: ConcurrentLinkedQueue[R] = ConcurrentLinkedQueue[R]()
-  override val incomingOpt: Option[ConcurrentLinkedQueue[T]] = Some(incoming)
-  override val outgoingOpt: Option[ConcurrentLinkedQueue[R]] = Some(outgoing)
+class OperatorExecutor[T, R](val incoming: BlockingQueue[T], val operator: T => R) extends Executor[T, R] :
+  val outgoing: BlockingQueue[R] = LinkedBlockingQueue[R](10)
+  override val incomingOpt: Option[BlockingQueue[T]] = Some(incoming)
+  override val outgoingOpt: Option[BlockingQueue[R]] = Some(outgoing)
 
   def runOnce(in: Option[T]): Unit = in match
     case Some(value) =>

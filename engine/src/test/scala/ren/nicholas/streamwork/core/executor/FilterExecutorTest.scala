@@ -5,17 +5,17 @@ import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.should
 import ren.nicholas.streamwork.core.executor.{FilterExecutor, OperatorExecutor}
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.{BlockingQueue, LinkedBlockingQueue}
 import scala.compiletime.uninitialized
 import scala.jdk.CollectionConverters.*
 
 class FilterExecutorTest extends AnyFunSpec with BeforeAndAfter with should.Matchers {
   var executor: FilterExecutor[String] = uninitialized
-  var incoming: ConcurrentLinkedQueue[String] = uninitialized
+  var incoming: BlockingQueue[String] = uninitialized
 
   describe("FilterExecutor") {
     before {
-      incoming = ConcurrentLinkedQueue()
+      incoming = LinkedBlockingQueue[String]()
       executor = new FilterExecutor[String](incoming, _.length > 3)
     }
 

@@ -5,7 +5,7 @@ import ren.nicholas.streamwork.core.stream.{KStream, Source}
 import ren.nicholas.streamwork.core.topology
 import ren.nicholas.streamwork.core.topology.{Node, Topology}
 
-import java.util.concurrent.ConcurrentLinkedQueue
+import java.util.concurrent.BlockingQueue
 
 
 class StreamBuilder():
@@ -21,7 +21,7 @@ class StreamBuilder():
     KStream(this, executors.map(_.outgoingOpt.get))
 
   private[stream]
-  def sink[In](name: String, incoming: Seq[ConcurrentLinkedQueue[In]], sink: Sink[In]): Unit =
+  def sink[In](name: String, incoming: Seq[BlockingQueue[In]], sink: Sink[In]): Unit =
     val executors = incoming.map(SinkExecutor(_, sink))
     nodes = topology.Node(name, executors) :: nodes
 
