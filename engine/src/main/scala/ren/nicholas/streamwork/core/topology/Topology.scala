@@ -8,6 +8,7 @@ import scala.concurrent.ExecutionContext.fromExecutor
 import scala.concurrent.{ExecutionContext, Future, blocking}
 
 class Topology(nodes: List[Node]):
+  given ec: ExecutionContext = fromExecutor(newFixedThreadPool(200))
 
   def executorOf(name: String): Option[AnyExecutor] =
     nodes.find(_.name == name).map(_.executors.head)
@@ -16,7 +17,9 @@ class Topology(nodes: List[Node]):
     nodes
       .flatMap(_.executors)
       .map { executor =>
-        CompletableFuture.runAsync(() => executor.run())
+        Future {
+          executor.run()
+        }
       }
   }
 
