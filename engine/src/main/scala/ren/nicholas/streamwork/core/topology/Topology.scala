@@ -8,7 +8,8 @@ import scala.concurrent.ExecutionContext.fromExecutor
 import scala.concurrent.{ExecutionContext, Future, blocking}
 
 class Topology(nodes: List[Node]):
-  given ec: ExecutionContext = fromExecutor(newFixedThreadPool(200))
+  private val executor = newFixedThreadPool(200)
+  given ec: ExecutionContext = fromExecutor(executor)
 
   def executorOf(name: String): Option[AnyExecutor] =
     nodes.find(_.name == name).map(_.executors.head)
@@ -23,7 +24,7 @@ class Topology(nodes: List[Node]):
       }
   }
 
-  def stop(): Unit = ForkJoinPool.commonPool().shutdownNow()
+  def stop(): Unit =executor.shutdown()
 
   def string(): String = nodes.map(node =>
     s"""${node.name}
